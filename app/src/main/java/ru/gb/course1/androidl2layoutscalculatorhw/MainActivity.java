@@ -459,6 +459,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         SavedData savedDatas = new SavedData();
+
+// Вот здесь начинает вылетать программа, при переключении на вторую активити. На главной пока работаешь - всё нормально.
+// Но как только переключешься на вторую, так прога сразу валится. А всё из-за строки, которая ниже. Ну, и восстановление
+// я тоже пока закомментил до выяснения причины с сохранением.
         outState.putSerializable(OUR_RESULT_STRING_KEY, savedDatas);
     }
 
