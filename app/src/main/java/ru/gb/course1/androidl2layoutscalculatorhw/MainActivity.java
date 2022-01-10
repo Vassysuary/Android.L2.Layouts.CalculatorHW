@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,27 +23,29 @@ public class MainActivity extends AppCompatActivity {
     private char operation = ' ';
     private boolean afterEquals = true;
     private TextView resultTextView;
-    private Button oneButton;
-    private Button twoButton;
-    private Button threeButton;
-    private Button fourButton;
-    private Button fiveButton;
-    private Button sixButton;
-    private Button sevenButton;
-    private Button eightButton;
-    private Button nineButton;
-    private Button zeroButton;
-    private Button multiplicationButton;
-    private Button divideButton;
-    private Button subtractionButton;
-    private Button additionButton;
-    private Button pointButton;
-    private Button equalsButton;
-    private Button clearEndButton;
-    private Button clearButton;
-    private Button sqrtButton;
-    private Button cubeButton;
+    private Button digitOneButton;
+    private Button digitTwoButton;
+    private Button digitThreeButton;
+    private Button digitFourButton;
+    private Button digitFiveButton;
+    private Button digitSixButton;
+    private Button digitSevenButton;
+    private Button digitEightButton;
+    private Button digitNineButton;
+    private Button digitZeroButton;
+    private Button operationMultiplicationButton;
+    private Button operationDivideButton;
+    private Button operationSubtractionButton;
+    private Button operationAdditionButton;
+    private Button decimalPointButton;
+    private Button performCalculationButton;
+    private Button clearLastDigitOrSymbolButton;
+    private Button clearAllButton;
+    private Button operationSqrtButton;
+    private Button operationCubeButton;
+    private static final String TAG = "@@@@@";
     private static final String OUR_RESULT_STRING_KEY = "@@@";
+    public SavedData savedDatas = new SavedData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,152 +58,163 @@ public class MainActivity extends AppCompatActivity {
 //        }
         findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
             Intent intent = new Intent(this, BigDigitActivity.class);
+            initialSaveData();
+            intent.putExtra(BigDigitActivity.HASH_FOR_VALUE_KEY, savedDatas);
             startActivity(intent);
         });
 
-        multiplicationButton.setOnClickListener(new View.OnClickListener() {
+        operationMultiplicationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (argument != "") {
-                    if (countArgs == 0) {
-                        arg1 = Float.parseFloat(argument);
-                        operation = '*';
-                        textString += "*";
-                        resultTextView.setText(textString);
-                    } else {
-                        arg2 = Float.parseFloat(argument);
-                        if (calculateResult(arg1, arg2, operation)) {
-                            resultTextView.setText("Делить на ноль нельзя!");
-                            totalResult = 0f;
-                            textString = "";
-                            operation = ' ';
-                            countArgs = -1;
-                        } else {
+                    if (CheckArgForCorrectInput(argument)) {
+                        if (countArgs == 0) {
+                            arg1 = Float.parseFloat(argument);
                             operation = '*';
                             textString += "*";
                             resultTextView.setText(textString);
+                        } else {
+                            arg2 = Float.parseFloat(argument);
+                            if (calculateResult(arg1, arg2, operation)) {
+                                resultTextView.setText("Делить на ноль нельзя!");
+                                totalResult = 0f;
+                                textString = "";
+                                operation = ' ';
+                                countArgs = -1;
+                            } else {
+                                operation = '*';
+                                textString += "*";
+                                resultTextView.setText(textString);
+                            }
+                            arg1 = totalResult;
                         }
-                        arg1 = totalResult;
+                        countArgs++;
+                        argument = "";
+                        afterEquals = false;
                     }
-                    countArgs++;
-                    argument = "";
-                    afterEquals = false;
                 }
             }
         });
-        subtractionButton.setOnClickListener(new View.OnClickListener() {
+        operationSubtractionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (argument != "") {
-                    if (countArgs == 0) {
-                        arg1 = Float.parseFloat(argument);
-                        operation = '-';
-                        textString += "-";
-                        resultTextView.setText(textString);
-                    } else {
-                        arg2 = Float.parseFloat(argument);
-                        if (calculateResult(arg1, arg2, operation)) {
-                            resultTextView.setText("Делить на ноль нельзя!");
-                            totalResult = 0f;
-                            textString = "";
-                            operation = ' ';
-                            countArgs = -1;
-                        } else {
+                    if (CheckArgForCorrectInput(argument)) {
+                        if (countArgs == 0) {
+                            arg1 = Float.parseFloat(argument);
                             operation = '-';
                             textString += "-";
                             resultTextView.setText(textString);
+                        } else {
+                            arg2 = Float.parseFloat(argument);
+                            if (calculateResult(arg1, arg2, operation)) {
+                                resultTextView.setText("Делить на ноль нельзя!");
+                                totalResult = 0f;
+                                textString = "";
+                                operation = ' ';
+                                countArgs = -1;
+                            } else {
+                                operation = '-';
+                                textString += "-";
+                                resultTextView.setText(textString);
+                            }
+                            arg1 = totalResult;
                         }
-                        arg1 = totalResult;
+                        countArgs++;
+                        argument = "";
+                        afterEquals = false;
                     }
-                    countArgs++;
-                    argument = "";
-                    afterEquals = false;
                 }
             }
         });
-        additionButton.setOnClickListener(new View.OnClickListener() {
+        operationAdditionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (argument != "") {
-                    if (countArgs == 0) {
-                        arg1 = Float.parseFloat(argument);
-                        operation = '+';
-                        textString += "+";
-                        resultTextView.setText(textString);
-                    } else {
-                        arg2 = Float.parseFloat(argument);
-                        if (calculateResult(arg1, arg2, operation)) {
-                            resultTextView.setText("Делить на ноль нельзя!");
-                            totalResult = 0f;
-                            textString = "";
-                            operation = ' ';
-                            countArgs = -1;
-                        } else {
+                    if (CheckArgForCorrectInput(argument)) {
+                        if (countArgs == 0) {
+                            arg1 = Float.parseFloat(argument);
                             operation = '+';
                             textString += "+";
                             resultTextView.setText(textString);
+                        } else {
+                            arg2 = Float.parseFloat(argument);
+                            if (calculateResult(arg1, arg2, operation)) {
+                                resultTextView.setText("Делить на ноль нельзя!");
+                                totalResult = 0f;
+                                textString = "";
+                                operation = ' ';
+                                countArgs = -1;
+                            } else {
+                                operation = '+';
+                                textString += "+";
+                                resultTextView.setText(textString);
+                            }
+                            arg1 = totalResult;
                         }
-                        arg1 = totalResult;
+                        countArgs++;
+                        argument = "";
+                        afterEquals = false;
                     }
-
-                    countArgs++;
-                    argument = "";
-                    afterEquals = false;
                 }
             }
         });
-        divideButton.setOnClickListener(new View.OnClickListener() {
+        operationDivideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (argument != "") {
-                    if (countArgs == 0) {
-                        arg1 = Float.parseFloat(argument);
-                        operation = '/';
-                        textString += "/";
-                        resultTextView.setText(textString);
-                    } else {
+                    if (CheckArgForCorrectInput(argument)) {
+                        if (countArgs == 0) {
+                            arg1 = Float.parseFloat(argument);
+                            operation = '/';
+                            textString += "/";
+                            resultTextView.setText(textString);
+                        } else {
+                            arg2 = Float.parseFloat(argument);
+                            if (calculateResult(arg1, arg2, operation)) {
+                                resultTextView.setText("Делить на ноль нельзя!");
+                                totalResult = 0f;
+                                textString = "";
+                                operation = ' ';
+                                countArgs = -1;
+                            } else {
+                                operation = '/';
+                                textString += "/";
+                                resultTextView.setText(textString);
+                            }
+                            arg1 = totalResult;
+                        }
+                        countArgs++;
+                        argument = "";
+                        afterEquals = false;
+                    }
+                }
+            }
+        });
+        performCalculationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (argument != "" && countArgs >= 1 && operation != ' ') {
+                    if (CheckArgForCorrectInput(argument)) {
                         arg2 = Float.parseFloat(argument);
                         if (calculateResult(arg1, arg2, operation)) {
                             resultTextView.setText("Делить на ноль нельзя!");
                             totalResult = 0f;
+                            argument = "";
                             textString = "";
-                            operation = ' ';
-                            countArgs = -1;
                         } else {
-                            operation = '/';
-                            textString += "/";
-                            resultTextView.setText(textString);
+                            resultTextView.setText(String.valueOf(totalResult));
+                            argument = String.valueOf(totalResult);
+                            textString = String.valueOf(totalResult);
                         }
-                        arg1 = totalResult;
+                        countArgs = 0;
+                        operation = ' ';
+                        afterEquals = true;
                     }
-                    countArgs++;
-                    argument = "";
-                    afterEquals = false;
                 }
             }
         });
-        equalsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (argument != "" && countArgs >= 1 && operation != ' ') {
-                    arg2 = Float.parseFloat(argument);
-                    if (calculateResult(arg1, arg2, operation)) {
-                        resultTextView.setText("Делить на ноль нельзя!");
-                        totalResult = 0f;
-                        argument = "";
-                        textString = "";
-                    } else {
-                        resultTextView.setText(String.valueOf(totalResult));
-                        argument = String.valueOf(totalResult);
-                        textString = String.valueOf(totalResult);
-                    }
-                    countArgs = 0;
-                    operation = ' ';
-                    afterEquals = true;
-                }
-            }
-        });
-        clearButton.setOnClickListener(new View.OnClickListener() {
+        clearAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 totalResult = 0f;
@@ -210,84 +225,98 @@ public class MainActivity extends AppCompatActivity {
                 operation = ' ';
             }
         });
-        clearEndButton.setOnClickListener(new View.OnClickListener() {
+        clearLastDigitOrSymbolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String tS;
-                if (textString != "") {
-                    char op = textString.charAt(textString.length()-1);
-                    if ( op == '/' || op == '*' || op == '+' || op == '-') operation = ' ';
+                if (!textString.isEmpty()) {
+                    char op = textString.charAt(textString.length() - 1);
+                    if (op == '/' || op == '*' || op == '+' || op == '-') operation = ' ';
                     else {
-                        tS = argument.substring(0, argument.length() - 1);
-                        argument = tS;
+                        if (!argument.isEmpty()) {
+                            tS = argument.substring(0, argument.length() - 1);
+                            argument = tS;
+                        }
                     }
                     tS = textString.substring(0, textString.length() - 1);
                     textString = tS;
                     resultTextView.setText(textString);
                 }
-            }
-        });
-        sqrtButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (argument != "") {
-                    if (countArgs == 0) {
-                        arg1 = Float.parseFloat(argument);
-                        totalResult = arg1 * arg1;
-                        argument = String.valueOf(totalResult);
-                        textString = String.valueOf(totalResult);
-                        resultTextView.setText(String.valueOf(totalResult));
-                    } else {
-                        arg2 = Float.parseFloat(argument);
-                        if (calculateResult(arg1, arg2, operation)) {
-                            resultTextView.setText("Делить на ноль нельзя!");
-                            totalResult = 0f;
-                            argument = "";
-                            textString = "";
-                        } else {
-                            totalResult *= totalResult;
-                            resultTextView.setText(String.valueOf(totalResult));
-                            argument = String.valueOf(totalResult);
-                            textString = String.valueOf(totalResult);
-                        }
-                    }
+                else {
+                    totalResult = 0f;
+                    argument = "";
+                    textString = "";
+                    resultTextView.setText(String.valueOf(totalResult));
                     countArgs = 0;
                     operation = ' ';
-                    afterEquals = true;
                 }
             }
         });
-        cubeButton.setOnClickListener(new View.OnClickListener() {
+        operationSqrtButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (argument != "") {
-                    if (countArgs == 0) {
-                        arg1 = Float.parseFloat(argument);
-                        totalResult = arg1 * arg1 * arg1;
-                        argument = String.valueOf(totalResult);
-                        textString = String.valueOf(totalResult);
-                        resultTextView.setText(String.valueOf(totalResult));
-                    } else {
-                        arg2 = Float.parseFloat(argument);
-                        if (calculateResult(arg1, arg2, operation)) {
-                            resultTextView.setText("Делить на ноль нельзя!");
-                            totalResult = 0f;
-                            argument = "";
-                            textString = "";
-                        } else {
-                            totalResult = totalResult * totalResult * totalResult;
-                            resultTextView.setText(String.valueOf(totalResult));
+                    if (CheckArgForCorrectInput(argument)) {
+                        if (countArgs == 0) {
+                            arg1 = Float.parseFloat(argument);
+                            totalResult = arg1 * arg1;
                             argument = String.valueOf(totalResult);
                             textString = String.valueOf(totalResult);
+                            resultTextView.setText(String.valueOf(totalResult));
+                        } else {
+                            arg2 = Float.parseFloat(argument);
+                            if (calculateResult(arg1, arg2, operation)) {
+                                resultTextView.setText("Делить на ноль нельзя!");
+                                totalResult = 0f;
+                                argument = "";
+                                textString = "";
+                            } else {
+                                totalResult *= totalResult;
+                                resultTextView.setText(String.valueOf(totalResult));
+                                argument = String.valueOf(totalResult);
+                                textString = String.valueOf(totalResult);
+                            }
                         }
+                        countArgs = 0;
+                        operation = ' ';
+                        afterEquals = true;
                     }
-                    countArgs = 0;
-                    operation = ' ';
-                    afterEquals = true;
                 }
             }
         });
-        oneButton.setOnClickListener(new View.OnClickListener() {
+        operationCubeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (argument != "") {
+                    if (CheckArgForCorrectInput(argument)) {
+                        if (countArgs == 0) {
+                            arg1 = Float.parseFloat(argument);
+                            totalResult = arg1 * arg1 * arg1;
+                            argument = String.valueOf(totalResult);
+                            textString = String.valueOf(totalResult);
+                            resultTextView.setText(String.valueOf(totalResult));
+                        } else {
+                            arg2 = Float.parseFloat(argument);
+                            if (calculateResult(arg1, arg2, operation)) {
+                                resultTextView.setText("Делить на ноль нельзя!");
+                                totalResult = 0f;
+                                argument = "";
+                                textString = "";
+                            } else {
+                                totalResult = totalResult * totalResult * totalResult;
+                                resultTextView.setText(String.valueOf(totalResult));
+                                argument = String.valueOf(totalResult);
+                                textString = String.valueOf(totalResult);
+                            }
+                        }
+                        countArgs = 0;
+                        operation = ' ';
+                        afterEquals = true;
+                    }
+                }
+            }
+        });
+        digitOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -302,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        twoButton.setOnClickListener(new View.OnClickListener() {
+        digitTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -317,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        threeButton.setOnClickListener(new View.OnClickListener() {
+        digitThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -332,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        fourButton.setOnClickListener(new View.OnClickListener() {
+        digitFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -347,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        fiveButton.setOnClickListener(new View.OnClickListener() {
+        digitFiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -362,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        sixButton.setOnClickListener(new View.OnClickListener() {
+        digitSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -377,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        sevenButton.setOnClickListener(new View.OnClickListener() {
+        digitSevenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -392,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        eightButton.setOnClickListener(new View.OnClickListener() {
+        digitEightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -407,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        nineButton.setOnClickListener(new View.OnClickListener() {
+        digitNineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -422,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        zeroButton.setOnClickListener(new View.OnClickListener() {
+        digitZeroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -438,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        pointButton.setOnClickListener(new View.OnClickListener() {
+        decimalPointButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (afterEquals) {
@@ -454,64 +483,71 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+// Проверка аргумента на правильный ввод
+    private boolean CheckArgForCorrectInput(String arg) {
+//        Log.d(TAG, "CheckArgForCorrectInput() called with: arg = [" + arg.length() + "]");
+//        Log.d(TAG, "CheckArgForCorrectInput() called with: arg = [" + arg.substring(0,2) + "]");
+        if (arg.length() > 1 && arg.substring(0, 2).equals("00")) {
+            Toast.makeText(this, "Неправильный ввод!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        try {
+            Float.parseFloat(arg);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Неправильный ввод!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        SavedData savedDatas = new SavedData();
-
-// Вот здесь начинает вылетать программа, при переключении на вторую активити. На главной пока работаешь - всё нормально.
-// Но как только переключешься на вторую, так прога сразу валится. А всё из-за строки, которая ниже. Ну, и восстановление
-// я тоже пока закомментил до выяснения причины с сохранением.
-        outState.putSerializable(OUR_RESULT_STRING_KEY, savedDatas);
+        initialSaveData();
+//        outState.putSerializable(OUR_RESULT_STRING_KEY, savedDatas);
+        outState.putParcelable(OUR_RESULT_STRING_KEY, savedDatas);
     }
 
-//    @Override
-//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        SavedData savedData = new SavedData();
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        SavedData savedData = new SavedData();
 //        savedData = (SavedData) savedInstanceState.getSerializable(OUR_RESULT_STRING_KEY);
-//        countArgs = savedData.countArgsSave;
-//        arg1 = savedData.arg1Save;
-//        arg2 = savedData.arg2Save;
-//        totalResult = savedData.totalResultSave;
-//        argument = savedData.argumentSave;
-//        textString = savedData.textStringSave;
-//        operation = savedData.operationSave;
-//        afterEquals = savedData.afterEqualsSave;
-//        resultTextView.setText(textString);
-//    }
-
-    class SavedData implements Serializable {
-        public int countArgsSave = countArgs;
-        public float arg1Save = arg1, arg2Save = arg2, totalResultSave = totalResult;
-        public String argumentSave = argument, textStringSave = textString;
-        public char operationSave = operation;
-        public boolean afterEqualsSave = afterEquals;
+        savedData = (SavedData) savedInstanceState.getParcelable(OUR_RESULT_STRING_KEY);
+        countArgs = savedData.countArgsSave;
+        arg1 = savedData.arg1Save;
+        arg2 = savedData.arg2Save;
+        totalResult = savedData.totalResultSave;
+        argument = savedData.argumentSave;
+        textString = savedData.textStringSave;
+        operation = savedData.operationSave;
+        afterEquals = savedData.afterEqualsSave;
+        resultTextView.setText(textString);
     }
 
     private void initView() {
         resultTextView = findViewById(R.id.result_text_view);
-        oneButton = findViewById(R.id.one_button);
-        twoButton = findViewById(R.id.two_button);
-        threeButton = findViewById(R.id.three_button);
-        fourButton = findViewById(R.id.four_button);
-        fiveButton = findViewById(R.id.five_button);
-        sixButton = findViewById(R.id.six_button);
-        sevenButton = findViewById(R.id.seven_button);
-        eightButton = findViewById(R.id.eight_button);
-        nineButton = findViewById(R.id.nine_button);
-        zeroButton = findViewById(R.id.zero_button);
-        multiplicationButton = findViewById(R.id.multiplication_button);
-        divideButton = findViewById(R.id.divide_button);
-        subtractionButton = findViewById(R.id.subtraction_button);
-        additionButton = findViewById(R.id.addition_button);
-        pointButton = findViewById(R.id.point_button);
-        equalsButton = findViewById(R.id.equals_button);
-        clearEndButton = findViewById(R.id.clear_end_button);
-        clearButton = findViewById(R.id.clear_button);
-        sqrtButton = findViewById(R.id.sqrt_button);
-        cubeButton = findViewById(R.id.cube_button);
+        digitOneButton = findViewById(R.id.digit_one_button);
+        digitTwoButton = findViewById(R.id.digit_two_button);
+        digitThreeButton = findViewById(R.id.digit_three_button);
+        digitFourButton = findViewById(R.id.digit_four_button);
+        digitFiveButton = findViewById(R.id.digit_five_button);
+        digitSixButton = findViewById(R.id.digit_six_button);
+        digitSevenButton = findViewById(R.id.digit_seven_button);
+        digitEightButton = findViewById(R.id.digit_eight_button);
+        digitNineButton = findViewById(R.id.digit_nine_button);
+        digitZeroButton = findViewById(R.id.digit_zero_button);
+        operationMultiplicationButton = findViewById(R.id.operation_multiplication_button);
+        operationDivideButton = findViewById(R.id.operation_divide_button);
+        operationSubtractionButton = findViewById(R.id.operation_subtraction_button);
+        operationAdditionButton = findViewById(R.id.operation_addition_button);
+        decimalPointButton = findViewById(R.id.decimal_point_button);
+        performCalculationButton = findViewById(R.id.perform_calculation_button);
+        clearLastDigitOrSymbolButton = findViewById(R.id.clear_last_digit_or_symbol_button);
+        clearAllButton = findViewById(R.id.clear_all_button);
+        operationSqrtButton = findViewById(R.id.operation_sqrt_button);
+        operationCubeButton = findViewById(R.id.operation_cube_button);
     }
 
     private boolean calculateResult(float a1, float a2, char op) {
@@ -542,5 +578,16 @@ public class MainActivity extends AppCompatActivity {
 //                break;
         }
         return false;
+    }
+
+    private void initialSaveData() {
+        savedDatas.countArgsSave = countArgs;
+        savedDatas.arg1Save = arg1;
+        savedDatas.arg2Save = arg2;
+        savedDatas.totalResultSave = totalResult;
+        savedDatas.argumentSave = argument;
+        savedDatas.textStringSave = textString;
+        savedDatas.operationSave = operation;
+        savedDatas.afterEqualsSave = afterEquals;
     }
 }

@@ -48,7 +48,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/one_button"
+            android:id="@+id/digit_one_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -59,7 +59,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/two_button"
+            android:id="@+id/digit_two_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -70,7 +70,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/three_button"
+            android:id="@+id/digit_three_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -81,7 +81,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/divide_button"
+            android:id="@+id/operation_divide_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -92,7 +92,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/clear_end_button"
+            android:id="@+id/clear_last_digit_or_symbol_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -103,7 +103,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/four_button"
+            android:id="@+id/digit_four_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -114,7 +114,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/five_button"
+            android:id="@+id/digit_five_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -125,7 +125,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/six_button"
+            android:id="@+id/digit_six_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -136,7 +136,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/multiplication_button"
+            android:id="@+id/operation_multiplication_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -147,7 +147,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/clear_button"
+            android:id="@+id/clear_all_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -158,7 +158,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/seven_button"
+            android:id="@+id/digit_seven_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -169,7 +169,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/eight_button"
+            android:id="@+id/digit_eight_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -180,7 +180,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/nine_button"
+            android:id="@+id/digit_nine_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -191,7 +191,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/subtraction_button"
+            android:id="@+id/operation_subtraction_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -202,7 +202,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/sqrt_button"
+            android:id="@+id/operation_sqrt_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -214,7 +214,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/zero_button"
+            android:id="@+id/digit_zero_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -225,7 +225,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/point_button"
+            android:id="@+id/decimal_point_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -236,7 +236,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/equals_button"
+            android:id="@+id/perform_calculation_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -246,7 +246,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/addition_button"
+            android:id="@+id/operation_addition_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -257,7 +257,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/cube_button"
+            android:id="@+id/operation_cube_button"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
