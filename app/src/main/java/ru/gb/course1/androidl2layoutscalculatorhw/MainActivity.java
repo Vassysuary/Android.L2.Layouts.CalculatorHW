@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int countArgs = 0;
+    public int countArgs = 0;
     private float arg1 = 0.0f, arg2 = 0.0f, totalResult = 0.0f;
     private String argument = "", textString = "";
     private char operation = ' ';
@@ -46,16 +46,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "@@@@@";
     private static final String OUR_RESULT_STRING_KEY = "@@@";
     public SavedData savedDatas = new SavedData();
+    public Calculator calculator = new Calculator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-//        if (savedInstanceState != null && savedInstanceState.containsKey(OUR_RESULT_STRING_KEY)){
-//            textString = savedInstanceState.getString(OUR_RESULT_STRING_KEY);
-//            resultTextView.setText(textString);
-//        }
         findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
             Intent intent = new Intent(this, BigDigitActivity.class);
             initialSaveData();
@@ -66,439 +63,124 @@ public class MainActivity extends AppCompatActivity {
         operationMultiplicationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "") {
-                    if (CheckArgForCorrectInput(argument)) {
-                        if (countArgs == 0) {
-                            arg1 = Float.parseFloat(argument);
-                            operation = '*';
-                            textString += "*";
-                            resultTextView.setText(textString);
-                        } else {
-                            arg2 = Float.parseFloat(argument);
-                            if (calculateResult(arg1, arg2, operation)) {
-                                resultTextView.setText("Делить на ноль нельзя!");
-                                totalResult = 0f;
-                                textString = "";
-                                operation = ' ';
-                                countArgs = -1;
-                            } else {
-                                operation = '*';
-                                textString += "*";
-                                resultTextView.setText(textString);
-                            }
-                            arg1 = totalResult;
-                        }
-                        countArgs++;
-                        argument = "";
-                        afterEquals = false;
-                    }
-                }
+                calculator.OperationMultiplication();
             }
         });
         operationSubtractionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "") {
-                    if (CheckArgForCorrectInput(argument)) {
-                        if (countArgs == 0) {
-                            arg1 = Float.parseFloat(argument);
-                            operation = '-';
-                            textString += "-";
-                            resultTextView.setText(textString);
-                        } else {
-                            arg2 = Float.parseFloat(argument);
-                            if (calculateResult(arg1, arg2, operation)) {
-                                resultTextView.setText("Делить на ноль нельзя!");
-                                totalResult = 0f;
-                                textString = "";
-                                operation = ' ';
-                                countArgs = -1;
-                            } else {
-                                operation = '-';
-                                textString += "-";
-                                resultTextView.setText(textString);
-                            }
-                            arg1 = totalResult;
-                        }
-                        countArgs++;
-                        argument = "";
-                        afterEquals = false;
-                    }
-                }
+                calculator.OperationSubtraction();
             }
         });
         operationAdditionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "") {
-                    if (CheckArgForCorrectInput(argument)) {
-                        if (countArgs == 0) {
-                            arg1 = Float.parseFloat(argument);
-                            operation = '+';
-                            textString += "+";
-                            resultTextView.setText(textString);
-                        } else {
-                            arg2 = Float.parseFloat(argument);
-                            if (calculateResult(arg1, arg2, operation)) {
-                                resultTextView.setText("Делить на ноль нельзя!");
-                                totalResult = 0f;
-                                textString = "";
-                                operation = ' ';
-                                countArgs = -1;
-                            } else {
-                                operation = '+';
-                                textString += "+";
-                                resultTextView.setText(textString);
-                            }
-                            arg1 = totalResult;
-                        }
-                        countArgs++;
-                        argument = "";
-                        afterEquals = false;
-                    }
-                }
+                calculator.OperationAddition();
             }
         });
         operationDivideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "") {
-                    if (CheckArgForCorrectInput(argument)) {
-                        if (countArgs == 0) {
-                            arg1 = Float.parseFloat(argument);
-                            operation = '/';
-                            textString += "/";
-                            resultTextView.setText(textString);
-                        } else {
-                            arg2 = Float.parseFloat(argument);
-                            if (calculateResult(arg1, arg2, operation)) {
-                                resultTextView.setText("Делить на ноль нельзя!");
-                                totalResult = 0f;
-                                textString = "";
-                                operation = ' ';
-                                countArgs = -1;
-                            } else {
-                                operation = '/';
-                                textString += "/";
-                                resultTextView.setText(textString);
-                            }
-                            arg1 = totalResult;
-                        }
-                        countArgs++;
-                        argument = "";
-                        afterEquals = false;
-                    }
-                }
+                calculator.OperationDivide();
             }
         });
         performCalculationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "" && countArgs >= 1 && operation != ' ') {
-                    if (CheckArgForCorrectInput(argument)) {
-                        arg2 = Float.parseFloat(argument);
-                        if (calculateResult(arg1, arg2, operation)) {
-                            resultTextView.setText("Делить на ноль нельзя!");
-                            totalResult = 0f;
-                            argument = "";
-                            textString = "";
-                        } else {
-                            resultTextView.setText(String.valueOf(totalResult));
-                            argument = String.valueOf(totalResult);
-                            textString = String.valueOf(totalResult);
-                        }
-                        countArgs = 0;
-                        operation = ' ';
-                        afterEquals = true;
-                    }
-                }
+                calculator.PerformCalculation();
             }
         });
         clearAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                totalResult = 0f;
-                argument = "";
-                textString = "";
-                resultTextView.setText(String.valueOf(totalResult));
-                countArgs = 0;
-                operation = ' ';
+                calculator.ClearAll();
             }
         });
         clearLastDigitOrSymbolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tS;
-                if (!textString.isEmpty()) {
-                    char op = textString.charAt(textString.length() - 1);
-                    if (op == '/' || op == '*' || op == '+' || op == '-') operation = ' ';
-                    else {
-                        if (!argument.isEmpty()) {
-                            tS = argument.substring(0, argument.length() - 1);
-                            argument = tS;
-                        }
-                    }
-                    tS = textString.substring(0, textString.length() - 1);
-                    textString = tS;
-                    resultTextView.setText(textString);
-                }
-                else {
-                    totalResult = 0f;
-                    argument = "";
-                    textString = "";
-                    resultTextView.setText(String.valueOf(totalResult));
-                    countArgs = 0;
-                    operation = ' ';
-                }
+                calculator.ClearLastDigitOrSymbol();
             }
         });
         operationSqrtButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "") {
-                    if (CheckArgForCorrectInput(argument)) {
-                        if (countArgs == 0) {
-                            arg1 = Float.parseFloat(argument);
-                            totalResult = arg1 * arg1;
-                            argument = String.valueOf(totalResult);
-                            textString = String.valueOf(totalResult);
-                            resultTextView.setText(String.valueOf(totalResult));
-                        } else {
-                            arg2 = Float.parseFloat(argument);
-                            if (calculateResult(arg1, arg2, operation)) {
-                                resultTextView.setText("Делить на ноль нельзя!");
-                                totalResult = 0f;
-                                argument = "";
-                                textString = "";
-                            } else {
-                                totalResult *= totalResult;
-                                resultTextView.setText(String.valueOf(totalResult));
-                                argument = String.valueOf(totalResult);
-                                textString = String.valueOf(totalResult);
-                            }
-                        }
-                        countArgs = 0;
-                        operation = ' ';
-                        afterEquals = true;
-                    }
-                }
+                calculator.OperationSqrt();
             }
         });
         operationCubeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (argument != "") {
-                    if (CheckArgForCorrectInput(argument)) {
-                        if (countArgs == 0) {
-                            arg1 = Float.parseFloat(argument);
-                            totalResult = arg1 * arg1 * arg1;
-                            argument = String.valueOf(totalResult);
-                            textString = String.valueOf(totalResult);
-                            resultTextView.setText(String.valueOf(totalResult));
-                        } else {
-                            arg2 = Float.parseFloat(argument);
-                            if (calculateResult(arg1, arg2, operation)) {
-                                resultTextView.setText("Делить на ноль нельзя!");
-                                totalResult = 0f;
-                                argument = "";
-                                textString = "";
-                            } else {
-                                totalResult = totalResult * totalResult * totalResult;
-                                resultTextView.setText(String.valueOf(totalResult));
-                                argument = String.valueOf(totalResult);
-                                textString = String.valueOf(totalResult);
-                            }
-                        }
-                        countArgs = 0;
-                        operation = ' ';
-                        afterEquals = true;
-                    }
-                }
+                calculator.OperationCube();
             }
         });
         digitOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "1";
-                    argument = "1";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "1";
-                    textString += "1";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitOne();
             }
         });
         digitTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "2";
-                    argument = "2";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "2";
-                    textString += "2";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitTwo();
             }
         });
         digitThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "3";
-                    argument = "3";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "3";
-                    textString += "3";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitThree();
             }
         });
         digitFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "4";
-                    argument = "4";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "4";
-                    textString += "4";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitFour();
             }
         });
         digitFiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "5";
-                    argument = "5";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "5";
-                    textString += "5";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitFive();
             }
         });
         digitSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "6";
-                    argument = "6";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "6";
-                    textString += "6";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitSix();
             }
         });
         digitSevenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "7";
-                    argument = "7";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "7";
-                    textString += "7";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitSeven();
             }
         });
         digitEightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "8";
-                    argument = "8";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "8";
-                    textString += "8";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitEight();
             }
         });
         digitNineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "9";
-                    argument = "9";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "9";
-                    textString += "9";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitNine();
             }
         });
         digitZeroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = "0";
-                    argument = "0";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += "0";
-                    textString += "0";
-                    resultTextView.setText(textString);
-                }
+                calculator.DigitZero();
 
             }
         });
         decimalPointButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (afterEquals) {
-                    textString = ".";
-                    argument = ".";
-                    resultTextView.setText(textString);
-                    afterEquals = false;
-                } else {
-                    argument += ".";
-                    textString += ".";
-                    resultTextView.setText(textString);
-                }
+                calculator.DecimalPoint();
             }
         });
-    }
-// Проверка аргумента на правильный ввод
-    private boolean CheckArgForCorrectInput(String arg) {
-//        Log.d(TAG, "CheckArgForCorrectInput() called with: arg = [" + arg.length() + "]");
-//        Log.d(TAG, "CheckArgForCorrectInput() called with: arg = [" + arg.substring(0,2) + "]");
-        if (arg.length() > 1 && arg.substring(0, 2).equals("00")) {
-            Toast.makeText(this, "Неправильный ввод!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        try {
-            Float.parseFloat(arg);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Неправильный ввод!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
     }
 
     @Override
@@ -528,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         resultTextView = findViewById(R.id.result_text_view);
+        calculator.resultTextViewCalc = findViewById(R.id.result_text_view);
         digitOneButton = findViewById(R.id.digit_one_button);
         digitTwoButton = findViewById(R.id.digit_two_button);
         digitThreeButton = findViewById(R.id.digit_three_button);
@@ -548,36 +231,6 @@ public class MainActivity extends AppCompatActivity {
         clearAllButton = findViewById(R.id.clear_all_button);
         operationSqrtButton = findViewById(R.id.operation_sqrt_button);
         operationCubeButton = findViewById(R.id.operation_cube_button);
-    }
-
-    private boolean calculateResult(float a1, float a2, char op) {
-        switch (op) {
-            case '*':
-                totalResult = a1 * a2;
-                break;
-            case '-':
-                totalResult = a1 - a2;
-                break;
-            case '+':
-                totalResult = a1 + a2;
-                break;
-            case '/':
-                if (a2 < 0.0000000001f) {
-                    return true;
-                } else totalResult = a1 / a2;
-
-//  Почему-то не ловит(( Не непойму...((
-//                try {
-//                    totalResult = a1 / a2;
-//                 } catch (Exception e) {
-//                    e.printStackTrace();
-//                    totalResult = 0f;
-//                    textString = "";
-//                    return true;
-//                }
-//                break;
-        }
-        return false;
     }
 
     private void initialSaveData() {
