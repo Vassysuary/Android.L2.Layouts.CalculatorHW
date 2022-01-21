@@ -5,15 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private Button clearAllButton;
     private Button operationSqrtButton;
     private Button operationCubeButton;
-    private static final String TAG = "@@@@@";
     private static final String OUR_RESULT_STRING_KEY = "@@@";
     public SavedData savedDatas = new SavedData();
     public Calculator calculator = new Calculator();
@@ -51,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         initView();
         findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {

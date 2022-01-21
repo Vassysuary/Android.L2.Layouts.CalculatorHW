@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_android"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="5">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_column="0"
+            android:layout_columnSpan="5"
+            android:layout_gravity="fill"
+            android:layout_margin="@dimen/default_margin"
+            android:padding="@dimen/default_padding"
+            android:text="@string/number_version_calculator"
+            android:textAlignment="gravity"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="italic" />
+
+        <com.google.android.material.button.MaterialButton
+
+            android:id="@+id/result_text_view"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/grey"
+            android:gravity="end"
+            android:text="0"
+            style="@style/default_big_key_style"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_one_button"
+            android:text="1"
+            android:backgroundTint="@color/grey"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_two_button"
+            android:backgroundTint="@color/grey"
+            android:text="2"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_three_button"
+            android:backgroundTint="@color/grey"
+            android:text="3"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/operation_divide_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="/"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_last_digit_or_symbol_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="CE"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_four_button"
+            android:backgroundTint="@color/grey"
+            android:text="4"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_five_button"
+            android:backgroundTint="@color/grey"
+            android:text="5"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_six_button"
+            android:backgroundTint="@color/grey"
+            android:text="6"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/operation_multiplication_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="*"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_all_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="C"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_seven_button"
+            android:backgroundTint="@color/grey"
+            android:text="7"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_eight_button"
+            android:backgroundTint="@color/grey"
+            android:text="8"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_nine_button"
+            android:backgroundTint="@color/grey"
+            android:text="9"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/operation_subtraction_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="-"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/operation_sqrt_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="x2"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/digit_zero_button"
+            android:backgroundTint="@color/grey"
+            android:text="0"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/decimal_point_button"
+            android:backgroundTint="@color/grey"
+            android:text="."
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/perform_calculation_button"
+            android:text="="
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/operation_addition_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="+"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/operation_cube_button"
+            android:backgroundTint="@color/dark_grey"
+            android:text="x3"
+            style="@style/default_digits_style" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_new_activity_with_big_digits"
+            android:backgroundTint="#B69BE9"
+            android:text="@string/enlarge_view_button"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/color_button_when_press"
+            style="@style/default_big_key_style"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/landscape_layout"
+            android:backgroundTint="#D3EEA9"
+            android:text="@string/landscape_view_button"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/color_button_when_press"
+            style="@style/default_big_key_style"/>
+    </GridLayout>
+</LinearLayout>
