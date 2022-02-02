@@ -17,7 +17,7 @@
 
         <TextView
             android:text="@string/number_version_calculator"
-            style="@style/number_version_style"/>
+            style="@style/number_version_style" />
 
         <com.google.android.material.button.MaterialButton
 
@@ -154,6 +154,13 @@
             android:textAllCaps="false"
             android:textColor="@color/color_button_when_press"
             style="@style/default_big_key_style"/>
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/landscape_layout"
+            android:backgroundTint="#D3EEA9"
+            android:text="@string/landscape_view_button"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/color_button_when_press"
+            style="@style/default_big_key_style"/>
     </GridLayout>
 </LinearLayout>

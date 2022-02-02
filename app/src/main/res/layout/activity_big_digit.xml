@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03F707"
+    android:background="@color/green"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -16,12 +16,12 @@
         android:layout_column="0"
         android:layout_columnSpan="5"
         android:layout_gravity="fill"
-        android:layout_margin="5dp"
-        android:padding="5dp"
+        android:layout_margin="@dimen/margin_second_activity"
+        android:padding="@dimen/padding_second_activity"
         android:text="0.000002"
         android:gravity="end"
         android:textColor="@color/black"
-        android:textSize="72sp"
+        android:textSize="@dimen/text_size_second_activity"
         android:textStyle="italic" />
 
     <Button
@@ -31,7 +31,7 @@
         android:text="Вернуться"
         android:textAllCaps="false"
         android:textAlignment="center"
-        android:backgroundTint="#E60542"
+        android:backgroundTint="@color/red"
         android:textColor="@color/black"
         android:textSize="20dp" />
 
