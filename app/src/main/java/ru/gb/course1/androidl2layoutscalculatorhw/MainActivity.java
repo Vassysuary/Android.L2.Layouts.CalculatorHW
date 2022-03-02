@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
+import ru.gb.course1.androidl2layoutscalculatorhw.domain.entities.InputSymbol;
+import ru.gb.course1.androidl2layoutscalculatorhw.domain.states.CalculatorOnStateMachine;
+
 public class MainActivity extends AppCompatActivity {
 
     public int countArgs = 0;
@@ -36,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private Button clearLastDigitOrSymbolButton;
     private Button clearAllButton;
     private Button operationSqrtButton;
-    private Button operationCubeButton;
+    private Button operationInversionButton;
     private static final String OUR_RESULT_STRING_KEY = "@@@";
     public SavedData savedDatas = new SavedData();
-    public Calculator calculator = new Calculator();
+    public CalculatorOnStateMachine calculatorOnStateMachine = new CalculatorOnStateMachine();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         initView();
+        initListeners();
         findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
             Intent intent = new Intent(this, BigDigitActivity.class);
             initialSaveData();
@@ -54,127 +60,127 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        operationMultiplicationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationMultiplication();
-            }
-        });
-        operationSubtractionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationSubtraction();
-            }
-        });
-        operationAdditionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationAddition();
-            }
-        });
-        operationDivideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationDivide();
-            }
-        });
-        performCalculationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.PerformCalculation();
-            }
-        });
-        clearAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.ClearAll();
-            }
-        });
-        clearLastDigitOrSymbolButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.ClearLastDigitOrSymbol();
-            }
-        });
-        operationSqrtButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationSqrt();
-            }
-        });
-        operationCubeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationCube();
-            }
-        });
-        digitOneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitOne();
-            }
-        });
-        digitTwoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitTwo();
-            }
-        });
-        digitThreeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitThree();
-            }
-        });
-        digitFourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitFour();
-            }
-        });
-        digitFiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitFive();
-            }
-        });
-        digitSixButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitSix();
-            }
-        });
-        digitSevenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitSeven();
-            }
-        });
-        digitEightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitEight();
-            }
-        });
-        digitNineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitNine();
-            }
-        });
-        digitZeroButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitZero();
-
-            }
-        });
-        decimalPointButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DecimalPoint();
-            }
-        });
+//        operationMultiplicationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.OperationMultiplication();
+//            }
+//        });
+//        operationSubtractionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.OperationSubtraction();
+//            }
+//        });
+//        operationAdditionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.OperationAddition();
+//            }
+//        });
+//        operationDivideButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.OperationDivide();
+//            }
+//        });
+//        performCalculationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.PerformCalculation();
+//            }
+//        });
+//        clearAllButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.ClearAll();
+//            }
+//        });
+//        clearLastDigitOrSymbolButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.ClearLastDigitOrSymbol();
+//            }
+//        });
+//        operationSqrtButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.OperationSqrt();
+//            }
+//        });
+//        operationCubeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.OperationCube();
+//            }
+//        });
+//        digitOneButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitOne();
+//            }
+//        });
+//        digitTwoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitTwo();
+//            }
+//        });
+//        digitThreeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitThree();
+//            }
+//        });
+//        digitFourButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitFour();
+//            }
+//        });
+//        digitFiveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitFive();
+//            }
+//        });
+//        digitSixButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitSix();
+//            }
+//        });
+//        digitSevenButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitSeven();
+//            }
+//        });
+//        digitEightButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitEight();
+//            }
+//        });
+//        digitNineButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitNine();
+//            }
+//        });
+//        digitZeroButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DigitZero();
+//
+//            }
+//        });
+//        decimalPointButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                calculator.DecimalPoint();
+//            }
+//        });
     }
 
     @Override
@@ -204,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         resultTextView = findViewById(R.id.result_text_view);
-        calculator.resultTextViewCalc = findViewById(R.id.result_text_view);
+        calculatorOnStateMachine.resultTextViewCalc = findViewById(R.id.result_text_view);
         digitOneButton = findViewById(R.id.digit_one_button);
         digitTwoButton = findViewById(R.id.digit_two_button);
         digitThreeButton = findViewById(R.id.digit_three_button);
@@ -224,8 +230,79 @@ public class MainActivity extends AppCompatActivity {
         clearLastDigitOrSymbolButton = findViewById(R.id.clear_last_digit_or_symbol_button);
         clearAllButton = findViewById(R.id.clear_all_button);
         operationSqrtButton = findViewById(R.id.operation_sqrt_button);
-        operationCubeButton = findViewById(R.id.operation_cube_button);
+        operationInversionButton = findViewById(R.id.operation_inversion_button);
     }
+
+    private void initListeners() {
+        digitOneButton.setOnClickListener(v -> updateInput(InputSymbol.ONE_DIGIT));
+        digitTwoButton.setOnClickListener(v -> updateInput(InputSymbol.TWO_DIGIT));
+        digitThreeButton.setOnClickListener(v -> updateInput(InputSymbol.THREE_DIGIT));
+        digitFourButton.setOnClickListener(v -> updateInput(InputSymbol.FOUR_DIGIT));
+        digitFiveButton.setOnClickListener(v -> updateInput(InputSymbol.FIVE_DIGIT));
+        digitSixButton.setOnClickListener(v -> updateInput(InputSymbol.SIX_DIGIT));
+        digitSevenButton.setOnClickListener(v -> updateInput(InputSymbol.SEVEN_DIGIT));
+        digitEightButton.setOnClickListener(v -> updateInput(InputSymbol.EIGHT_DIGIT));
+        digitNineButton.setOnClickListener(v -> updateInput(InputSymbol.NINE_DIGIT));
+        digitZeroButton.setOnClickListener(v -> updateInput(InputSymbol.ZERO_DIGIT));
+        operationMultiplicationButton.setOnClickListener(v -> updateInput(InputSymbol.MULTIPL_OPERATION));
+        operationDivideButton.setOnClickListener(v -> updateInput(InputSymbol.DIVIDE_OPERATION));
+        operationSubtractionButton.setOnClickListener(v -> updateInput(InputSymbol.SUBSTRACT_OPERATION));
+        operationAdditionButton.setOnClickListener(v -> updateInput(InputSymbol.ADD_OPERATION));
+        operationInversionButton.setOnClickListener(v -> updateInput(InputSymbol.INVERSION_OPERATION));
+        operationSqrtButton.setOnClickListener(v -> updateInput(InputSymbol.SQRT_OPERATION));
+        decimalPointButton.setOnClickListener(v -> updateInput(InputSymbol.DEC_POINT));
+        performCalculationButton.setOnClickListener(v -> updateInput(InputSymbol.PERFORM_CALC));
+        clearAllButton.setOnClickListener(v -> updateInput(InputSymbol.CLEAR_ALL_OPERATION));
+        clearLastDigitOrSymbolButton.setOnClickListener(v -> updateInput(InputSymbol.CLEAR_LAST_SYMBOL_OPERATION));
+    }
+
+    private void updateInput(InputSymbol inputSymbol) {
+        calculatorOnStateMachine.onClickButton(inputSymbol);
+//        List<InputSymbol> inputSymbolList = calculatorOnStateMachine.getInput();
+//        resultTextView.setText(convertResultSymbolToString(inputSymbolList));
+    }
+
+//    private String convertResultSymbolToString(List<InputSymbol> inputSymbolList) {
+//        final StringBuilder sb = new StringBuilder();
+//        for (InputSymbol inputSymbol : inputSymbolList) {
+//            switch (inputSymbol) {
+//                case ZERO_DIGIT:
+//                    sb.append("@string/symbol_zero_on_button");
+//                    break;
+//                case ONE_DIGIT:
+//                    sb.append("@string/symbol_one_on_button");
+//                    break;
+//                case TWO_DIGIT:
+//                    sb.append("@string/symbol_two_on_button");
+//                    break;
+//                case THREE_DIGIT:
+//                    sb.append("@string/symbol_three_on_button");
+//                    break;
+//                case FOUR_DIGIT:
+//                    sb.append("@string/symbol_four_on_button");
+//                    break;
+//                case FIVE_DIGIT:
+//                    sb.append("@string/symbol_five_on_button");
+//                    break;
+//                case SIX_DIGIT:
+//                    sb.append("@string/symbol_six_on_button");
+//                    break;
+//                case SEVEN_DIGIT:
+//                    sb.append("@string/symbol_seven_on_button");
+//                    break;
+//                case EIGHT_DIGIT:
+//                    sb.append("@string/symbol_eight_on_button");
+//                    break;
+//                case NINE_DIGIT:
+//                    sb.append("@string/symbol_nine_on_button");
+//                    break;
+//                default:
+//                    sb.append("@");
+//                    break;
+//            }
+//        }
+//        return sb.toString();
+//    }
 
     private void initialSaveData() {
         savedDatas.countArgsSave = countArgs;
