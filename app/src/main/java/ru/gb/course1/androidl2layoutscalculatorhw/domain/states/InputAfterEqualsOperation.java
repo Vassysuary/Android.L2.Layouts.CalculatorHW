@@ -61,7 +61,6 @@ public class InputAfterEqualsOperation extends BaseState {
             case CLEAR_ALL_OPERATION:
                 return new Input1stArgument();
             case SQRT_OPERATION:
-//                arg1 = Float.parseFloat(convertResultSymbolToString(input));
                 arg1 *= arg1;
                 input = convertResultStringToInputSymbols(String.valueOf(arg1));
                 break;

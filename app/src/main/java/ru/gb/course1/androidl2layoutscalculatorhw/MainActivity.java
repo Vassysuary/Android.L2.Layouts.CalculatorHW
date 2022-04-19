@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import ru.gb.course1.androidl2layoutscalculatorhw.domain.entities.InputSymbol;
 import ru.gb.course1.androidl2layoutscalculatorhw.domain.states.BaseState;
 import ru.gb.course1.androidl2layoutscalculatorhw.domain.states.CalculatorOnStateMachine;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String resultText = "";
     private TextView resultTextView;
@@ -56,13 +57,25 @@ public class MainActivity extends AppCompatActivity {
         calculatorOnStateMachine = new CalculatorOnStateMachine();
         initView();
         initListeners();
-        findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
-            Intent intent = new Intent(this, BigDigitActivity.class);
+        Button bigDigit = findViewById(R.id.open_new_activity_with_big_digits);
+        bigDigit.setOnClickListener((View.OnClickListener) this);
+
+//        findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
+//            Intent intent = new Intent(this, BigDigitActivity.class);
+//            initialSaveData();
+//            intent.putExtra(BigDigitActivity.HASH_FOR_VALUE_KEY, savedDatas);
+//            startActivity(intent);
+//        });
+    }
+
+    @Override
+    public void onClick(View v) {
+            Intent intent = new Intent("android.intent.action.bigdigit");
             initialSaveData();
             intent.putExtra(BigDigitActivity.HASH_FOR_VALUE_KEY, savedDatas);
             startActivity(intent);
-        });
-    }
+
+}
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -141,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         List<InputSymbol> inputSymbolList = calculatorOnStateMachine.getInput();
         resultText = calculatorBaseState.convertResultSymbolToString(inputSymbolList);
         if (resultText.isEmpty()) resultText = "0";
+        calculatorBaseState.textString = resultText;
         resultTextView.setText(resultText);
     }
 

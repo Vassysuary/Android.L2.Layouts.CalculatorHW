@@ -7,9 +7,6 @@ import ru.gb.course1.androidl2layoutscalculatorhw.domain.entities.InputSymbol;
 
 public class Input1stArgumentAfterZero extends BaseState {
 
-
-    public Input1stArgumentAfterZero() {}
-
     public Input1stArgumentAfterZero(List<InputSymbol> input) {
         this.input.addAll(input);
     }

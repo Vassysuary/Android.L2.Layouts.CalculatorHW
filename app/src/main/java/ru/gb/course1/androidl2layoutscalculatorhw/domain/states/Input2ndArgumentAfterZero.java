@@ -7,9 +7,6 @@ import ru.gb.course1.androidl2layoutscalculatorhw.domain.entities.InputSymbol;
 
 public class Input2ndArgumentAfterZero extends BaseState {
 
-
-    public Input2ndArgumentAfterZero() {}
-
     public Input2ndArgumentAfterZero(List<InputSymbol> input, List<InputSymbol> input1, float arg, char op) {
         this.input.addAll(input);
         this.input1.addAll(input1);
@@ -38,14 +35,9 @@ public class Input2ndArgumentAfterZero extends BaseState {
                 input.add(InputSymbol.DEC_POINT);
                 input1.add(InputSymbol.DEC_POINT);
                 return new Input2ndDecimalPartOfArgument(input, input1, arg1, operation);
-//            case INVERSION_OPERATION:
             case CLEAR_LAST_SYMBOL_OPERATION:
                 input.remove(input.size() - 1);
                 return new Input2ndArgument(input, arg1, operation);
-//            case SQRT_OPERATION:
-//            case ADD_OPERATION:
-//            case DIVIDE_OPERATION:
-//            case MULTIPL_OPERATION:
             case PERFORM_CALC:
                 arg2 = Float.parseFloat(convertResultSymbolToString(input1));
                 if (operation == '/') {

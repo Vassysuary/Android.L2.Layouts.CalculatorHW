@@ -26,9 +26,7 @@ import ru.gb.course1.androidl2layoutscalculatorhw.domain.entities.InputSymbol;
 
 abstract public class BaseState {
 
-//    public int countArgs = 0;
     public float arg1 = 0.0f, arg2 = 0.0f, totalResult = 0.0f;
-//    public String argument = "";
     public String textString = "";
     public char operation = ' ';
 
@@ -47,7 +45,6 @@ abstract public class BaseState {
             switch (inputSymbol) {
                 case ZERO_DIGIT:
                     sb.append("0");
-//                    sb.append("@string/symbol_zero_on_button");
                     break;
                 case ONE_DIGIT:
                     sb.append("1");
@@ -55,35 +52,27 @@ abstract public class BaseState {
                     break;
                 case TWO_DIGIT:
                     sb.append("2");
-//                    sb.append("@string/symbol_two_on_button");
                     break;
                 case THREE_DIGIT:
                     sb.append("3");
-//                    sb.append("@string/symbol_three_on_button");
                     break;
                 case FOUR_DIGIT:
                     sb.append("4");
-//                    sb.append("@string/symbol_four_on_button");
                     break;
                 case FIVE_DIGIT:
                     sb.append("5");
-//                    sb.append("@string/symbol_five_on_button");
                     break;
                 case SIX_DIGIT:
                     sb.append("6");
-//                    sb.append("@string/symbol_six_on_button");
                     break;
                 case SEVEN_DIGIT:
                     sb.append("7");
-//                    sb.append("@string/symbol_seven_on_button");
                     break;
                 case EIGHT_DIGIT:
                     sb.append("8");
-//                    sb.append("@string/symbol_eight_on_button");
                     break;
                 case NINE_DIGIT:
                     sb.append("9");
-//                    sb.append("@string/symbol_nine_on_button");
                     break;
                 case DEC_POINT:
                     sb.append(".");
@@ -119,7 +108,7 @@ abstract public class BaseState {
     }
 
     public List<InputSymbol> convertResultStringToInputSymbols(String str) {
-//        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         List<InputSymbol> inp = new ArrayList<>();
         for (int i = 0; i< str.length(); i++) {
             String s = str.substring(i,i+1);
@@ -169,16 +158,6 @@ abstract public class BaseState {
                 case "-":
                     inp.add(SUBSTRACT_OPERATION);
                     break;
-//                case PERFORM_CALC:
-//                    sb.append("=");
-//                    break;
-//                case CLEAR_ALL_OPERATION:
-//                    sb.append("C");
-//                    break;
-//                default:
-//                    inp.add("@");
-//                    sb.append("@");
-//                    break;
             }
         }
         return inp;
