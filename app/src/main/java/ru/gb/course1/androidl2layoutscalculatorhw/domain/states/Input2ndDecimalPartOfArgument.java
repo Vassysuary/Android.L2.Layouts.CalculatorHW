@@ -55,7 +55,8 @@ public class Input2ndDecimalPartOfArgument extends BaseState {
                 operation = textString.charAt(textString.length() - 1);
                 return new Input2ndArgument(input, arg1, operation);
             case INVERSION_OPERATION:
-                if (Float.parseFloat(convertResultSymbolToString(input1)) >= 0.0f)
+                if (Float.parseFloat(convertResultSymbolToString(input1)) == 0.0f);
+                else if (Float.parseFloat(convertResultSymbolToString(input1)) >= 0.0f)
                     input1.add(0, InputSymbol.SUBSTRACT_OPERATION);
                 else input1.remove(0);
                 input = new ArrayList<>();
