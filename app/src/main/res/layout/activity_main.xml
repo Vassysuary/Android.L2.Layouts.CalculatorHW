@@ -24,126 +24,126 @@
             android:id="@+id/result_text_view"
             android:backgroundTint="@color/grey"
             android:gravity="end|center_vertical"
-            android:text="0"
+            android:text="@string/symbol_zero_on_button"
             style="@style/default_big_key_style"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_one_button"
-            android:text="1"
+            android:text="@string/symbol_one_on_button"
             android:backgroundTint="@color/grey"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_two_button"
             android:backgroundTint="@color/grey"
-            android:text="2"
+            android:text="@string/symbol_two_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_three_button"
             android:backgroundTint="@color/grey"
-            android:text="3"
+            android:text="@string/symbol_three_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/operation_divide_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="/"
+            android:text="@string/divide_operation"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clear_last_digit_or_symbol_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="CE"
+            android:text="@string/symbol_clear_last_digit_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_four_button"
             android:backgroundTint="@color/grey"
-            android:text="4"
+            android:text="@string/symbol_four_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_five_button"
             android:backgroundTint="@color/grey"
-            android:text="5"
+            android:text="@string/symbol_five_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_six_button"
             android:backgroundTint="@color/grey"
-            android:text="6"
+            android:text="@string/symbol_six_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/operation_multiplication_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="*"
+            android:text="@string/multiplication_operation"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clear_all_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="C"
+            android:text="@string/symbol_clear_all_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_seven_button"
             android:backgroundTint="@color/grey"
-            android:text="7"
+            android:text="@string/symbol_seven_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_eight_button"
             android:backgroundTint="@color/grey"
-            android:text="8"
+            android:text="@string/symbol_eight_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_nine_button"
             android:backgroundTint="@color/grey"
-            android:text="9"
+            android:text="@string/symbol_nine_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/operation_subtraction_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="-"
+            android:text="@string/subtraction_operation"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/operation_sqrt_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="x2"
+            android:text="@string/sqrt_operation"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/digit_zero_button"
             android:backgroundTint="@color/grey"
-            android:text="0"
+            android:text="@string/symbol_zero_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/decimal_point_button"
             android:backgroundTint="@color/grey"
-            android:text="."
+            android:text="@string/symbol_decimal_point_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/perform_calculation_button"
-            android:text="="
+            android:text="@string/symbol_perform_calculation_on_button"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/operation_addition_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="+"
+            android:text="@string/addition_operation"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/operation_cube_button"
+            android:id="@+id/operation_inversion_button"
             android:backgroundTint="@color/dark_grey"
-            android:text="x3"
+            android:text="@string/inversion_operation"
             style="@style/default_digits_style" />
 
         <com.google.android.material.button.MaterialButton

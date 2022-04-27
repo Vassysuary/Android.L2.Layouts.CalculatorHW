@@ -9,13 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
-    public int countArgs = 0;
-    private float arg1 = 0.0f, arg2 = 0.0f, totalResult = 0.0f;
-    private String argument = "", textString = "";
-    private char operation = ' ';
-    private boolean afterEquals = true;
+import ru.gb.course1.androidl2layoutscalculatorhw.domain.entities.InputSymbol;
+import ru.gb.course1.androidl2layoutscalculatorhw.domain.states.BaseState;
+import ru.gb.course1.androidl2layoutscalculatorhw.domain.states.CalculatorOnStateMachine;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private String resultText = "";
     private TextView resultTextView;
     private Button digitOneButton;
     private Button digitTwoButton;
@@ -36,146 +38,44 @@ public class MainActivity extends AppCompatActivity {
     private Button clearLastDigitOrSymbolButton;
     private Button clearAllButton;
     private Button operationSqrtButton;
-    private Button operationCubeButton;
+    private Button operationInversionButton;
     private static final String OUR_RESULT_STRING_KEY = "@@@";
     public SavedData savedDatas = new SavedData();
-    public Calculator calculator = new Calculator();
+    private CalculatorOnStateMachine calculatorOnStateMachine;
+    public BaseState calculatorBaseState = new BaseState() {
+        @Override
+        public BaseState onClickButton(InputSymbol inputSymbol) {
+            return null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+        calculatorOnStateMachine = new CalculatorOnStateMachine();
         initView();
-        findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
-            Intent intent = new Intent(this, BigDigitActivity.class);
+        initListeners();
+        Button bigDigit = findViewById(R.id.open_new_activity_with_big_digits);
+        bigDigit.setOnClickListener((View.OnClickListener) this);
+
+//        findViewById(R.id.open_new_activity_with_big_digits).setOnClickListener(view -> {
+//            Intent intent = new Intent(this, BigDigitActivity.class);
+//            initialSaveData();
+//            intent.putExtra(BigDigitActivity.HASH_FOR_VALUE_KEY, savedDatas);
+//            startActivity(intent);
+//        });
+    }
+
+    @Override
+    public void onClick(View v) {
+            Intent intent = new Intent("android.intent.action.bigdigit");
             initialSaveData();
             intent.putExtra(BigDigitActivity.HASH_FOR_VALUE_KEY, savedDatas);
             startActivity(intent);
-        });
 
-        operationMultiplicationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationMultiplication();
-            }
-        });
-        operationSubtractionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationSubtraction();
-            }
-        });
-        operationAdditionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationAddition();
-            }
-        });
-        operationDivideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationDivide();
-            }
-        });
-        performCalculationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.PerformCalculation();
-            }
-        });
-        clearAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.ClearAll();
-            }
-        });
-        clearLastDigitOrSymbolButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.ClearLastDigitOrSymbol();
-            }
-        });
-        operationSqrtButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationSqrt();
-            }
-        });
-        operationCubeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.OperationCube();
-            }
-        });
-        digitOneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitOne();
-            }
-        });
-        digitTwoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitTwo();
-            }
-        });
-        digitThreeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitThree();
-            }
-        });
-        digitFourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitFour();
-            }
-        });
-        digitFiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitFive();
-            }
-        });
-        digitSixButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitSix();
-            }
-        });
-        digitSevenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitSeven();
-            }
-        });
-        digitEightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitEight();
-            }
-        });
-        digitNineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitNine();
-            }
-        });
-        digitZeroButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DigitZero();
-
-            }
-        });
-        decimalPointButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculator.DecimalPoint();
-            }
-        });
-    }
+}
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -191,20 +91,19 @@ public class MainActivity extends AppCompatActivity {
         SavedData savedData = new SavedData();
 //        savedData = (SavedData) savedInstanceState.getSerializable(OUR_RESULT_STRING_KEY);
         savedData = (SavedData) savedInstanceState.getParcelable(OUR_RESULT_STRING_KEY);
-        countArgs = savedData.countArgsSave;
-        arg1 = savedData.arg1Save;
-        arg2 = savedData.arg2Save;
-        totalResult = savedData.totalResultSave;
-        argument = savedData.argumentSave;
-        textString = savedData.textStringSave;
-        operation = savedData.operationSave;
-        afterEquals = savedData.afterEqualsSave;
-        resultTextView.setText(textString);
+//        calculatorBaseState.countArgs = savedData.countArgsSave;
+        calculatorBaseState.arg1 = savedData.arg1Save;
+        calculatorBaseState.arg2 = savedData.arg2Save;
+        calculatorBaseState.totalResult = savedData.totalResultSave;
+//        calculatorBaseState.argument = savedData.argumentSave;
+        calculatorBaseState.textString = savedData.textStringSave;
+        calculatorBaseState.operation = savedData.operationSave;
+//        calculatorBaseState.afterEquals = savedData.afterEqualsSave;
+        resultTextView.setText(calculatorBaseState.textString);
     }
 
     private void initView() {
         resultTextView = findViewById(R.id.result_text_view);
-        calculator.resultTextViewCalc = findViewById(R.id.result_text_view);
         digitOneButton = findViewById(R.id.digit_one_button);
         digitTwoButton = findViewById(R.id.digit_two_button);
         digitThreeButton = findViewById(R.id.digit_three_button);
@@ -224,17 +123,49 @@ public class MainActivity extends AppCompatActivity {
         clearLastDigitOrSymbolButton = findViewById(R.id.clear_last_digit_or_symbol_button);
         clearAllButton = findViewById(R.id.clear_all_button);
         operationSqrtButton = findViewById(R.id.operation_sqrt_button);
-        operationCubeButton = findViewById(R.id.operation_cube_button);
+        operationInversionButton = findViewById(R.id.operation_inversion_button);
+    }
+
+    private void initListeners() {
+        digitOneButton.setOnClickListener(v -> updateInput(InputSymbol.ONE_DIGIT));
+        digitTwoButton.setOnClickListener(v -> updateInput(InputSymbol.TWO_DIGIT));
+        digitThreeButton.setOnClickListener(v -> updateInput(InputSymbol.THREE_DIGIT));
+        digitFourButton.setOnClickListener(v -> updateInput(InputSymbol.FOUR_DIGIT));
+        digitFiveButton.setOnClickListener(v -> updateInput(InputSymbol.FIVE_DIGIT));
+        digitSixButton.setOnClickListener(v -> updateInput(InputSymbol.SIX_DIGIT));
+        digitSevenButton.setOnClickListener(v -> updateInput(InputSymbol.SEVEN_DIGIT));
+        digitEightButton.setOnClickListener(v -> updateInput(InputSymbol.EIGHT_DIGIT));
+        digitNineButton.setOnClickListener(v -> updateInput(InputSymbol.NINE_DIGIT));
+        digitZeroButton.setOnClickListener(v -> updateInput(InputSymbol.ZERO_DIGIT));
+        operationMultiplicationButton.setOnClickListener(v -> updateInput(InputSymbol.MULTIPL_OPERATION));
+        operationDivideButton.setOnClickListener(v -> updateInput(InputSymbol.DIVIDE_OPERATION));
+        operationSubtractionButton.setOnClickListener(v -> updateInput(InputSymbol.SUBSTRACT_OPERATION));
+        operationAdditionButton.setOnClickListener(v -> updateInput(InputSymbol.ADD_OPERATION));
+        operationInversionButton.setOnClickListener(v -> updateInput(InputSymbol.INVERSION_OPERATION));
+        operationSqrtButton.setOnClickListener(v -> updateInput(InputSymbol.SQRT_OPERATION));
+        decimalPointButton.setOnClickListener(v -> updateInput(InputSymbol.DEC_POINT));
+        performCalculationButton.setOnClickListener(v -> updateInput(InputSymbol.PERFORM_CALC));
+        clearAllButton.setOnClickListener(v -> updateInput(InputSymbol.CLEAR_ALL_OPERATION));
+        clearLastDigitOrSymbolButton.setOnClickListener(v -> updateInput(InputSymbol.CLEAR_LAST_SYMBOL_OPERATION));
+    }
+
+    private void updateInput(InputSymbol inputSymbol) {
+        calculatorOnStateMachine.onClickButton(inputSymbol);
+        List<InputSymbol> inputSymbolList = calculatorOnStateMachine.getInput();
+        resultText = calculatorBaseState.convertResultSymbolToString(inputSymbolList);
+        if (resultText.isEmpty()) resultText = "0";
+        calculatorBaseState.textString = resultText;
+        resultTextView.setText(resultText);
     }
 
     private void initialSaveData() {
-        savedDatas.countArgsSave = countArgs;
-        savedDatas.arg1Save = arg1;
-        savedDatas.arg2Save = arg2;
-        savedDatas.totalResultSave = totalResult;
-        savedDatas.argumentSave = argument;
-        savedDatas.textStringSave = textString;
-        savedDatas.operationSave = operation;
-        savedDatas.afterEqualsSave = afterEquals;
+//        savedDatas.countArgsSave = calculatorBaseState.countArgs;
+        savedDatas.arg1Save = calculatorBaseState.arg1;
+        savedDatas.arg2Save = calculatorBaseState.arg2;
+        savedDatas.totalResultSave = calculatorBaseState.totalResult;
+//        savedDatas.argumentSave = calculatorBaseState.argument;
+        savedDatas.textStringSave = calculatorBaseState.textString;
+        savedDatas.operationSave = calculatorBaseState.operation;
+//        savedDatas.afterEqualsSave = calculatorBaseState.afterEquals;
     }
 }

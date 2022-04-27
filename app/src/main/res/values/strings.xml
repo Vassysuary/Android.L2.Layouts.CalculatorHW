@@ -3,4 +3,25 @@
     <string name="number_version_calculator">Калькулятор версия 0.000004</string>
     <string name="enlarge_view_button">Увеличить результат</string>
     <string name="landscape_view_button">Горизонтальная разметка</string>
+    <string name="can_not_divide_by_zero">Делить на ноль нельзя!</string>
+    <string name="multiplication_operation">*</string>
+    <string name="divide_operation">/</string>
+    <string name="subtraction_operation">-</string>
+    <string name="addition_operation">+</string>
+    <string name="symbol_clear_last_digit_on_button">CE</string>
+    <string name="symbol_clear_all_on_button">C</string>
+    <string name="sqrt_operation">x2</string>
+    <string name="symbol_decimal_point_on_button">.</string>
+    <string name="symbol_perform_calculation_on_button">=</string>
+    <string name="inversion_operation">+/-</string>
+    <string name="symbol_zero_on_button">0</string>
+    <string name="symbol_one_on_button">1</string>
+    <string name="symbol_two_on_button">2</string>
+    <string name="symbol_three_on_button">3</string>
+    <string name="symbol_four_on_button">4</string>
+    <string name="symbol_five_on_button">5</string>
+    <string name="symbol_six_on_button">6</string>
+    <string name="symbol_seven_on_button">7</string>
+    <string name="symbol_eight_on_button">8</string>
+    <string name="symbol_nine_on_button">9</string>
 </resources>

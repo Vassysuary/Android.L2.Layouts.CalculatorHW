@@ -18,7 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BigDigitActivity" />
+
+        <activity
+            android:name=".BigDigitActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.bigdigit" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
